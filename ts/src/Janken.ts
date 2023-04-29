@@ -1,46 +1,12 @@
+import { Player, Players } from './Players';
+import { Hand } from './hand';
+
 interface Playable {
   playJanken: () => Player[];
 }
 
-type Player = {
-  hand?: Hand[];
-  name: string;
-  result?: {
-    win: number;
-    lose: number;
-    draw: number;
-  };
-};
-
-// Playerクラスを実装する
-class Players {
-  private players: Player[] = [];
-  constructor() {}
-
-  addPlayer(player: Player) {
-    this.players.push(player);
-    this.players = this.players.map((player) => ({
-      ...player,
-      result: {
-        win: 0,
-        lose: 0,
-        draw: 0,
-      },
-    }));
-  }
-
-  getPlayers(): Player[] {
-    return this.players;
-  }
-}
-
-enum Hand {
-  Stone,
-  Scissors,
-  Paper,
-}
-
-class Janken implements Playable {
+// じゃんけんの判定や結果の表示などを行うクラス
+export class Janken implements Playable {
   private playerList: Player[];
   constructor(private count: number, private players: Players) {
     this.playerList = players.getPlayers();
@@ -130,30 +96,4 @@ class Janken implements Playable {
     });
     return addRandom;
   }
-}
-
-const player: Player = {
-  hand: [Hand.Paper, Hand.Stone],
-  name: 'プレイヤーA',
-};
-const player2: Player = {
-  hand: [Hand.Scissors, Hand.Stone],
-  name: 'プレイヤーB',
-};
-const player3: Player = {
-  hand: [Hand.Paper, Hand.Stone],
-  name: 'プレイヤーC',
-};
-
-try {
-  const p = new Players();
-  p.addPlayer(player);
-  p.addPlayer(player2);
-  p.addPlayer(player3);
-
-  const j = new Janken(3, p);
-  const result: Player[] = j.playJanken();
-  console.log('詳細：', result);
-} catch (error) {
-  console.log((error as Error).message);
 }
