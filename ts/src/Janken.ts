@@ -56,7 +56,7 @@ export class Janken implements Playable {
       let playerHand;
       for (const player of players) {
         playerHand = player.hand![times] as number;
-        console.log(`${player.name}さん、出し手：${hand[playerHand]}`);
+        console.log(`${player.name}さんの出し手：${hand[playerHand]}`);
         player.result!.draw++;
       }
       console.log(`あいこ！`);
@@ -72,10 +72,10 @@ export class Janken implements Playable {
 
     players.forEach((player) => {
       if (player.hand![times] === winnerHand) {
-        console.log(`${player.name}さん：出し手、${hand[winnerHand]}：勝ち!`);
+        console.log(`${player.name}さん：出し手の${hand[winnerHand]}：勝ち!`);
         player.result!.win++;
       } else {
-        console.log(`${player.name}さん：出し手、${hand[loseHand]}：負け!`);
+        console.log(`${player.name}さん：出し手の${hand[loseHand]}：負け!`);
         player.result!.lose++;
       }
     });

@@ -15,7 +15,7 @@ export class Players {
   private players: Player[] = [];
   constructor() {}
 
-  addPlayer(player: Player) {
+  public addPlayer(player: Player): void {
     this.players.push(player);
     this.players = this.players.map((player) => ({
       ...player,
@@ -27,7 +27,7 @@ export class Players {
     }));
   }
 
-  getPlayers(): Player[] {
+  public getPlayers(): Player[] {
     return this.players;
   }
 }
