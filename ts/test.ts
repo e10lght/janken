@@ -41,20 +41,23 @@ enum Hand {
 }
 
 class Janken implements Playable {
-  constructor(private count: number, private players: Player[]) {}
+  private playerList: Player[];
+  constructor(private count: number, private players: Players) {
+    this.playerList = players.getPlayers();
+  }
 
   public playJanken(): Player[] {
     let result: Player[] = [];
 
-    if (this.players.length < 2) {
+    if (this.playerList.length < 2) {
       throw new Error('じゃんけんはプレイヤーが2人以上必要です');
     }
 
     for (let i = 0; i < this.count; i++) {
       console.log(`第${i + 1}回戦！`);
       const addedRandom = this.assignRandomHands(i);
-      this.players = addedRandom;
-      result = this.judge(this.players, i);
+      this.playerList = addedRandom;
+      result = this.judge(this.playerList, i);
     }
     console.log('最終結果');
     for (const player of result) {
@@ -115,7 +118,7 @@ class Janken implements Playable {
 
   //  手札がない場合ランダムで入れる
   private assignRandomHands(times: number): Player[] {
-    const addRandom = this.players.map((player) => {
+    const addRandom = this.playerList.map((player) => {
       if (player.hand![times] == null) {
         const random = Math.floor(Math.random() * 3) as Hand;
         return {
@@ -147,9 +150,8 @@ try {
   p.addPlayer(player);
   p.addPlayer(player2);
   p.addPlayer(player3);
-  const players = p.getPlayers();
 
-  const j = new Janken(3, players);
+  const j = new Janken(3, p);
   const result: Player[] = j.playJanken();
   console.log('詳細：', result);
 } catch (error) {
