@@ -5,6 +5,13 @@ interface Playable {
   playJanken: () => Player[];
 }
 
+// 'typeof Hand' を使用して型を取得
+type HandType = typeof Hand;
+// 'keyof HandType' を使用して、Hand のキーの型を取得
+type HandKey = keyof HandType;
+// 'HandType[HandKey]' を使用して、Hand の値の型を取得
+type HandValue = HandType[HandKey];
+
 // じゃんけんの判定や結果の表示などを行うクラス
 export class Janken implements Playable {
   private playerList: Player[];
@@ -23,6 +30,7 @@ export class Janken implements Playable {
       console.log(`第${i + 1}回戦！`);
       const addedRandom = this.assignRandomHands(i);
       this.playerList = addedRandom;
+      // ループの度に上書きしている
       result = this.judge(this.playerList, i);
     }
     console.log('最終結果');
@@ -86,7 +94,7 @@ export class Janken implements Playable {
   private assignRandomHands(times: number): Player[] {
     const addRandom = this.playerList.map((player) => {
       if (player.hand![times] == null) {
-        const random = Math.floor(Math.random() * 3) as Hand;
+        const random = Math.floor(Math.random() * 3) as HandValue;
         return {
           ...player,
           hand: [...player.hand!, random],

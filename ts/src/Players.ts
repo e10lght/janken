@@ -1,7 +1,7 @@
 import { Hand } from './hand';
 
 export type Player = {
-  hand?: Hand[];
+  hand?: HandValue[];
   name: string;
   result?: {
     win: number;
@@ -9,6 +9,13 @@ export type Player = {
     draw: number;
   };
 };
+
+// 'typeof Hand' を使用して型を取得
+type HandType = typeof Hand;
+// 'keyof HandType' を使用して、Hand のキーの型を取得
+type HandKey = keyof HandType;
+// 'HandType[HandKey]' を使用して、Hand の値の型を取得
+type HandValue = HandType[HandKey];
 
 // Playerを管理するクラス
 export class Players {
