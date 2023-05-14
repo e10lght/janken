@@ -24,6 +24,8 @@ export class Janken implements Playable {
 
     if (this.playerList.length < 2) {
       throw new Error('じゃんけんはプレイヤーが2人以上必要です');
+    } else {
+      console.log('じゃんけん開始！');
     }
 
     for (let i = 0; i < this.count; i++) {
